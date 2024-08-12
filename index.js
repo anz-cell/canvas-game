@@ -124,7 +124,7 @@ function init() {
 
 function spawnEnemies() {
     setInterval(() => {
-        const radius = Math.random() * (30 - 10) + 10
+        const radius = Math.random() * (30 - 7) + 7
 
         let x
         let y
@@ -194,12 +194,12 @@ function animate() {
             if (dist - enemy.radius - projectile.radius < 1) {
                 for (let i = 0; i < enemy.radius * 2; i++) {
                     particles.push(new Particle(projectile.x, projectile.y, Math.random() * 2, enemy.color, {
-                        x: (Math.random() - 0.5) * (Math.random() * 4),
-                        y: (Math.random() - 0.5) * (Math.random() * 4)
+                        x: (Math.random() - 0.5) * (Math.random() * 6),
+                        y: (Math.random() - 0.5) * (Math.random() * 6)
                     }))
                 }
 
-                if (enemy.radius - 10 > 10) {
+                if (enemy.radius - 10 > 7) {
                     score += 100
                     scoreEl.innerHTML = score
                     gsap.to(enemy, {
