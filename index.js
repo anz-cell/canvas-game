@@ -124,7 +124,7 @@ function init() {
 
 function spawnEnemies() {
     setInterval(() => {
-        const radius = Math.random() * (30 - 4) + 4
+        const radius = Math.random() * (30 - 10) + 10
 
         let x
         let y
@@ -199,7 +199,7 @@ function animate() {
                     }))
                 }
 
-                if (enemy.radius - 10 > 5) {
+                if (enemy.radius - 10 > 10) {
                     score += 100
                     scoreEl.innerHTML = score
                     gsap.to(enemy, {
