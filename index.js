@@ -111,6 +111,7 @@ let player = new Player(x, y, 10, "white")
 let projectiles = []
 let enemies = []
 let particles = []
+let spawnIntervalId
 
 function init() {
     player = new Player(x, y, 10, "white")
@@ -120,10 +121,11 @@ function init() {
     score = 0
     scoreEl.innerHTML = score
     bigScoreEl.innerHTML = score
+    clearInterval(spawnIntervalId)
 }
 
 function spawnEnemies() {
-    setInterval(() => {
+    spawnIntervalId = setInterval(() => {
         const radius = Math.random() * (30 - 5) + 5
 
         let x
@@ -235,8 +237,6 @@ addEventListener('click', (event) => {
 })
 
 startGameBtn.addEventListener('click', (event) => {
-    localStorage.clear();
-    sessionStorage.clear();
     init()
     animate()
     spawnEnemies()
