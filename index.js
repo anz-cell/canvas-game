@@ -238,6 +238,8 @@ addEventListener('click', (event) => {
 })
 
 startGameBtn.addEventListener('click', (event) => {
+    localStorage.clear();
+    sessionStorage.clear();
     init()
     animate()
     spawnEnemies()
