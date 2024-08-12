@@ -146,7 +146,7 @@ function spawnEnemies() {
             y: Math.sin(angle)
         }
         enemies.push(new Enemy(x, y, radius, color, velocity))
-    }, 1500)
+    }, 1000)
 }
 
 let animationId
