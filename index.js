@@ -4,7 +4,6 @@ const context = canvas.getContext('2d');
 canvas.width = innerWidth
 canvas.height = innerHeight
 
-
 const scoreEl = document.querySelector('#scoreEl');
 const startGameBtn = document.querySelector('#startGameBtn');
 const modalEl = document.querySelector('#modalEl');
@@ -147,7 +146,7 @@ function spawnEnemies() {
             y: Math.sin(angle)
         }
         enemies.push(new Enemy(x, y, radius, color, velocity))
-    }, 2000)
+    }, 1000)
 }
 
 let animationId
@@ -162,6 +161,7 @@ function animate() {
             particles.splice(particleIndex, 1)
         }
         else {
+
             particle.update()
         }
     });
@@ -194,6 +194,8 @@ function animate() {
         projectiles.forEach((projectile, projectileIndex) => {
             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
             if (dist - enemy.radius - projectile.radius < 1) {
+
+
                 for (let i = 0; i < enemy.radius * 2; i++) {
                     particles.push(new Particle(projectile.x, projectile.y, Math.random() * 2, enemy.color, {
                         x: (Math.random() - 0.5) * (Math.random() * 8),
