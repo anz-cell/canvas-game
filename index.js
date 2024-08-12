@@ -126,7 +126,7 @@ function init() {
 
 function spawnEnemies() {
     spawnIntervalId = setInterval(() => {
-        const radius = Math.random() * (30 - 5) + 5
+        const radius = Math.random() * (30 - 4) + 4
 
         let x
         let y
