@@ -160,7 +160,6 @@ function animate() {
             particles.splice(particleIndex, 1)
         }
         else {
-
             particle.update()
         }
     });
@@ -243,4 +242,3 @@ startGameBtn.addEventListener('click', (event) => {
     spawnEnemies()
     modalEl.style.display = 'none'
 })
-
