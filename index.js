@@ -3,7 +3,7 @@ const context = canvas.getContext('2d');
 
 canvas.width = innerWidth
 canvas.height = innerHeight
-const frames = 0
+
 
 const scoreEl = document.querySelector('#scoreEl');
 const startGameBtn = document.querySelector('#startGameBtn');
@@ -225,7 +225,6 @@ function animate() {
         })
     })
 
-frames++
 }
 
 
@@ -241,9 +240,7 @@ addEventListener('click', (event) => {
 startGameBtn.addEventListener('click', (event) => {
     init()
     animate()
-    if (frames > 60) {
-        spawnEnemies()
-    }
+    spawnEnemies()
     modalEl.style.display = 'none'
 })
 
