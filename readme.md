@@ -35,7 +35,7 @@ C. release
 
 ## Full Source Code Listing
 
-1. Advanced
+## 1. Advanced
 
 ## A. Node.java
 
@@ -580,7 +580,7 @@ public class C_mutex extends Thread {
 }
 ```
 
-2. Basic
+## 2. Basic
 
 ## A. Node.java
 
