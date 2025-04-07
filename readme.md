@@ -438,7 +438,7 @@ public class Node {
             try (PrintWriter pout = new PrintWriter(s.getOutputStream(), true)) {
                 pout.println(n_host);
                 pout.println(n_port);
-                pout.println(priority);  // Send priority
+                pout.println(priority);
             }
         }
     }
@@ -534,7 +534,6 @@ public synchronized void show() {
         String[] firstReq = (String[]) data.get(0);
         int maxPriority = Integer.parseInt(firstReq[2]);
 
-        // Find highest priority request
         for (int i = 0; i < data.size(); i++) {
             String[] req = (String[]) data.get(i);
             int currentPriority = Integer.parseInt(req[2]);
@@ -555,7 +554,7 @@ public class C_mutex extends Thread {
     public void run() {
         try (ServerSocket ss_back = new ServerSocket(port)) {
             while (running) {
-                // Get highest priority request
+                
                 String[] request = (String[]) buffer.get();
                 n_host = request[0];
                 n_port = Integer.parseInt(request[1]);
