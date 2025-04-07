@@ -27,6 +27,19 @@ C. release
 
 ## Implementation
 ## 1. Basic
+## Class Diagram
+
+The following class diagram represents the advanced implementation of the Disstributed Mutual Exclusion system using a centralized coordinator approach. The Coordinator class is the main controller in the entire system and it manages access 
+to critical sections by distributing tokens to the nodes.
+
+The system is built around a shared buffer(C_buffer) that holds and manages token requests. This buffer is used by 3 main components: 
+C_mutex
+C_receiver
+C_Connection_r
+These 3 classes are shown as aggregations in the diagram, indicating that while these components use the buffer, they're not dependent on it for their existance. The C_receiver has a stronger relatiosnhip with C_Connection_r shown as composition, as it creates and controls the connection handlers.
+
+When a Node wants to access its critical section, it calls with the coordinator. The C_receiver accepts these incoming requests and creates a C_Connection_r instance to handle each connection. These requests are stored in the C_buffer, which maintains them in a queue. The C_mutex component then processes these requests, selecting the first node in the queue in FIFO order.
+
 ## A. Each node will be running on a specific host and port (host and port must be configured at launch time, e.g. by using a command line parameter
 
 While running Node.java this block of code is responsible for configuration of host and port. When running args[0] is the port number, args[2] host, args[1] the time for delay between requests.
@@ -384,6 +397,20 @@ public class C_mutex extends Thread {
 }
 ```
 ## 2. Advance
+## Class Diagram
+
+The following class diagram represents the advanced implementation of the Disstributed Mutual Exclusion system using a centralized coordinator approach. The Coordinator class is the main controller in the entire system and it manages access 
+to critical sections by distributing tokens to the nodes.
+
+The system is built around a shared buffer(C_buffer) that holds and manages token requests. This buffer is used by 3 main components: 
+C_mutex
+C_receiver
+C_Connection_r
+These 3 classes are shown as aggregations in the diagram, indicating that while these components use the buffer, they're not dependent on it for their existance. The C_receiver has a stronger relatiosnhip with C_Connection_r shown as composition, as it creates and controls the connection handlers.
+
+When a Node wants to access its critical section, it calls with the coordinator. The C_receiver accepts these incoming requests and creates a C_Connection_r instance to handle each connection. These requests are stored in the C_buffer, which maintains them in a priority-based queue. The C_mutex component then processes these requests, selecting which node should receive the token based on priority and waiting time and all the classes use a method in Node(logToFile()) to document all the processes.
+
+## The following features are built based on this class diagram:
 ## A. Implement a file logging mechanism using a single text file for all nodes and the coordinator. That is, nodes log their start of critical section and return of token to the coordinator in the file using timestamps. The coordinator may log token requests and issuing and queue length.
 
 This feature is implemented in the Node.java class where it uses a single file DME.txt shared
@@ -649,6 +676,9 @@ public void shutdown() {
     }
 ```
 
+## Output
+## Basic
+## Advance
 ## References
 
 1. DS-1 and DS-3 practical’s and lecture notes from these practical’s available in the Canvas.
