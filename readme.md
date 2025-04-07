@@ -28,7 +28,7 @@ C. release
 ## Implementation
 ## 1. Basic
 ## A. Each node will be running on a specific host and port (host and port must be configured at launch
-time, e.g. by using a command line parameter
+## time, e.g. by using a command line parameter
 
 While running Node.java this block of code is responsible for configuration of host and port. When running args[0] is the port number, args[2] host, args[1] the time for delay between requests.
 ```java
@@ -60,7 +60,7 @@ public static void main(String args[]) throws NumberFormatException, Interrupted
 ```
 
 ## B. request the token from the coordinator by passing the node's IP and port to the
-coordinator (the coordinator listens on port 7000 at a known IP address)
+## coordinator (the coordinator listens on port 7000 at a known IP address)
 
 When the node is running it requests the token from the coordinator using this block of code and it does repeatedly from the Node constructor since while(true) and then after sleeping for few seconds as described when starting the node thr requestToken() method gets called. This method creates a socket connection to the coordinator at c_host:c_request_port where c_request_port is defined as 7000. It then sends the node's own host n_host and port n_port to the coordinator. Then it uses PrintWriter to send the data through the socket's output stream. This connects to the coordinator listening port 7000 and sends the node's the token.
 ```java
@@ -74,8 +74,8 @@ private void requestToken() throws IOException {
 ```
 
 ## C. wait until the token is granted by the coordinator. Granting the token can be
-implemented by a simple message the coordinator sends to the node, analogously to
-what you did in the token ring-based solution.
+## implemented by a simple message the coordinator sends to the node, analogously to
+## what you did in the token ring-based solution.
 
 When the node is running and after the token has been granted it creates a server socket on the node's port (n_port). And then it calls n_ss.accept() which blocks until the coordinator connects - this is effectively the wait for the token. 
 When the coordinator grants the token by connecting to the port, accept() call returns. The node then enters its critical section.
@@ -101,10 +101,10 @@ try (Socket s = new Socket(n_host, n_port)) {
 ```
 
 ## D. execute the critical region, simulated by sleeping for about 3-5 secs, and outputting
-indicative messages marking the start and end of the critical section. Important: with
-multiple nodes running on the same machine, in different windows, it must be evident
-from the messages that only a single node at any one time is executing the critical
-session. Implement randomised sleep durations to experiment.
+## indicative messages marking the start and end of the critical section. Important: with
+## multiple nodes running on the same machine, in different windows, it must be evident
+## from the messages that only a single node at any one time is executing the critical
+## session. Implement randomised sleep durations to experiment.
 
 Now when its in the critical section there is clearly entry/exit messages and then random sleep duration 3000_ra.nextInt(2000) which creates a sleep between 3-5 seconds. Only one node can have the token at a time, so these 
 messages will never overlap between nodes.
@@ -122,7 +122,7 @@ private void processCriticalSection() throws IOException, InterruptedException {
 ```
 
 ## E. return the token to the coordinator. This can also be done through a simple message
-(the coordinator listens on port 7001).
+## (the coordinator listens on port 7001).
 
 This creates a socket connection to the coordinator at c_return_port defined as 7001 and then it sends the node's
 identification host and port to confirm which node is returning the token. Then it uses PrintWriter to send the data through the socket's output stream.
@@ -183,8 +183,8 @@ public class Coordinator {
 ```
 
 ## G. a receiver that listens for requests from nodes. On connection from a client, the receiver
-will spawn a thread (C_connection_r) that receives IP and port and stores these in the
-buffer using a request data structure, defined in the code.
+## will spawn a thread (C_connection_r) that receives IP and port and stores these in the
+## buffer using a request data structure, defined in the code.
 
 C_receiver continously listens for incoming connections and then for each connection it creates a new C_Connection_r thread
 and this allows handling multiple requests concurrently.
@@ -326,11 +326,11 @@ public class C_buffer {
 }
 ```
 ## H. a mutex thread that continuously fetches available requests from the buffer in a FIFO
-order. Currently, this is a non-blocking call, change this to be a blocking call. Make sure
-you use correct synchronisation calls and remove any unnecessary if conditions. For
-each request, the mutex thread issues the token to the requesting node, by connecting
-to the node's indicated port. It then waits for the token to be returned by means of a
-synchronisation (on port 7001)
+## order. Currently, this is a non-blocking call, change this to be a blocking call. Make sure
+## you use correct synchronisation calls and remove any unnecessary if conditions. For
+## each request, the mutex thread issues the token to the requesting node, by connecting
+## to the node's indicated port. It then waits for the token to be returned by means of a
+## synchronisation (on port 7001)
 
 C_mutex then gets a next request from the buffer and grants token by connecting to requesting node
 and then waits for the token return before processing next request and this ensures mutual exclusion
@@ -401,9 +401,9 @@ public class C_mutex extends Thread {
 ```
 ## 2. Advance
 ## A. Implement a file logging mechanism using a single text file for all nodes and the
-coordinator. That is, nodes log their start of critical section and return of token to the
-coordinator in the file using timestamps. The coordinator may log token requests and
-issuing and queue length.
+## coordinator. That is, nodes log their start of critical section and return of token to the
+## coordinator in the file using timestamps. The coordinator may log token requests and
+## issuing and queue length.
 
 This feature is implemented in the Node.java class where it uses a single file DME.txt shared
 by all nodes and coordinator this method is synchronized to handle concurrent writes from multiple
@@ -433,7 +433,7 @@ logToFile("Node " + n_host + ":" + n_port + " returned token");
 ```
 
 ## B. Implement a priority discipline in the request queue. Imagine a critical process that will
-have priority in acquiring the token over all the other nodes. Implement a solution to avoid starvation of low priority nodes.
+## have priority in acquiring the token over all the other nodes. Implement a solution to avoid starvation of low priority nodes.
 
 In Node.java the main() method accepts the priority as a command line argument and then the 
 constructor converts text priority ("HIGH"/"MID"/"LOW") to numbers (2/1/0) and then the requestToken() sends node's priority to coordinator with token request and other methods dont have much changes for regarding this feature
@@ -595,7 +595,7 @@ public class C_mutex extends Thread {
 ```
 
 ## C. Modify the nodes so that they deal with the coordinator being closed down (or crashing!). Implement 
-full gracefully closing down of the system initiated by a closing down request initiated by a node.
+## full gracefully closing down of the system initiated by a closing down request initiated by a node.
 
 The node initiates the request by taking a command line argument and sends that request to Coordinator and then 
 Coordinator to others
